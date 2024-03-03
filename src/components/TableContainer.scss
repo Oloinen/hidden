@@ -1,0 +1,18 @@
+@import "../theme/Variables.scss";
+
+.table-wrapper {
+    width: $table-width;
+    border: $green solid 4px;
+    border-collapse: collapse;
+}
+
+.heading {
+    font-size: $h1-font-size;
+    font-family: $h1-font;
+    line-height: 0.5;
+}
+
+.heading-text {
+    width: 100%;
+    text-align: center;
+}

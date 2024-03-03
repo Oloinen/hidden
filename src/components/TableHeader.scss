@@ -1,0 +1,11 @@
+@import "../theme/Variables.scss";
+
+.header {
+    background: $white;
+    border: $green solid 2px;
+    color: $black;
+    font-size: $th-font-size;
+    font-family: $th-font;
+    text-align: center;
+    line-height: 0.2;
+}

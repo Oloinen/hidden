@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "Libre-Franklin";
+    src: local("LibreFranklin-Regular"),
+      url("../fonts/LibreFranklin-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Fjalla-One";
+    src: local("FjallaOne-Regular"),
+      url("../fonts/FjallaOne-Regular.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Libre-Franklin-Bold";
+    src: local("LibreFranklin-Bold"),
+      url("../fonts/LibreFranklin-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Work-Sans";
+    src: local("WokrSans-Bold"),
+      url("../fonts/WorkSans-Bold.ttf") format("truetype");
+     font-weight: 700; 
+}

@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "module": "CommonJS",
+      "target":"ES2020",
+      "strict": true,
+      "outDir": "./dist/",
+      "noImplicitAny": true,
+      "allowSyntheticDefaultImports": true,
+      "jsx": "react-jsx",
+      "allowJs": true,
+      "lib": ["dom", "DOM.Iterable", "ESNext"],
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "noEmit": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["**/*.spec.ts"]
+  }
