@@ -1,9 +1,8 @@
 import { DATE_FORMAT_WEEKDAYS } from '../constants/CommonConstants';
 import { getWeekOfMonth, isWeekend } from 'date-fns';
-import { env } from '../env'
 
 export const isToday = (date: number): boolean => {
-    return date === new Date().getDate();
+    return date === getToday().getDate();
 }
 
 export const getFirstWeekDayOfMonth = (today: Date): Date => {
@@ -39,8 +38,8 @@ export const isWeekendDay = (today: Date, date: number): boolean => {
 }
 
 export const getToday = () => {
-    if (env.REACT_APP_TODAY) {
-        return new Date(env.REACT_APP_TODAY);
+    if (process.env.REACT_APP_TODAY) {
+        return new Date(process.env.REACT_APP_TODAY);
     }
     return new Date();
 }

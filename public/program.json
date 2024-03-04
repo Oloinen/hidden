@@ -2,20 +2,20 @@
     "week1": [{
       "weekday": "MONDAY",
       "title": "The Meru Health Program",
-      "completed": true
+      "completed": false
     }, {
       "weekday": "WEDNESDAY",
       "title": "Introduction to the Program",
-      "completed": true
+      "completed": false
     }, {
       "weekday": "FRIDAY",
       "title": "The Science Behind Mindfulness",
-      "completed": true
+      "completed": false
     }],
     "week2": [{
       "weekday": "MONDAY",
       "title": "Mind on Autopilot",
-      "completed": true
+      "completed": false
     }, {
       "weekday": "WEDNESDAY",
       "title": "Mindful Presence",

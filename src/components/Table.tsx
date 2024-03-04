@@ -2,37 +2,37 @@ import _ from 'lodash';
 import TableHeader from './TableHeader';
 import DayCell from '../classes/DayCell';
 import TableCell from './TableCell';
-import { isWeekendDay, getToday } from '../utils/DateUtils';
+import { isWeekendDay } from '../utils/DateUtils';
 
 import './Table.scss'
 
 interface TableProps {
     dayCellArray: DayCell[];
+    today: Date;
 }
 
 const filterDataForCalendar = (dayCellArray: DayCell[], today: Date): DayCell[][] => {
     const todaysDate = today.getDate();
 
-    const pastProgramsToBeMoved = dayCellArray
-        .filter(day => day.date as number <= todaysDate && !day.completed)
+    const programsToBeMoved = dayCellArray
+        .filter(day => day.date as number < todaysDate && !day.completed)
         .map(day => day.title);  
-
-    const allProgramsToBeMoved = dayCellArray
-        .filter(day => !day.completed)
-        .map(day => day.title);
 
     const newArray = dayCellArray.map((day) => {
         const { date, title } = day;
 
         if (date as number < todaysDate) {
-            return pastProgramsToBeMoved.includes(title) 
+            return programsToBeMoved.includes(title) 
             ? new DayCell(date, '')
             : new DayCell(date, title);
-        } else if (allProgramsToBeMoved.length) {
+        } else if (programsToBeMoved.length) {
             if (isWeekendDay(today, date as number)) {
                 return new DayCell(day.date, day.title)
             }
-            const newTitle = allProgramsToBeMoved.shift();
+            if (title.length > 0) {
+                programsToBeMoved.push(title)
+            }
+            const newTitle = programsToBeMoved.shift();
             return new DayCell(date, newTitle as string);
         }
         return new DayCell(date, title)               
@@ -40,18 +40,22 @@ const filterDataForCalendar = (dayCellArray: DayCell[], today: Date): DayCell[][
     return _.chunk(newArray,7);
 }
 
-const Table = ({ dayCellArray }: TableProps) => {
-    const today: Date = getToday();
+const Table = ({ dayCellArray, today }: TableProps) => {
 
-    const renderRow = (weekDays: DayCell[], index: number): JSX.Element => {
-        return (      
-            <tr key={`${weekDays[index].date}+${index}`}>
-                {weekDays.map((weekDay: DayCell, index: number) => (
-                    <TableCell title={weekDay.title} date={weekDay.date} key={`${weekDay.date}+${index}`}/>
-                ))}
-            </tr>
-        );
-    };
+    const renderRow = (weekDays: DayCell[], index: number): JSX.Element => (      
+        <tr data-cy='day-cell-row' key={weekDays[index].title+index}>
+            {weekDays.map((weekDay: DayCell, index: number) => {
+                const { title, date } = weekDay;
+                return (
+                    <TableCell 
+                        title={title} 
+                        date={date}
+                        key={title+index}
+                    />
+                )
+            })}
+        </tr>
+    );
 
     return (
         <>

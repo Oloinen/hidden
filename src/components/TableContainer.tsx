@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getDaysInMonth, getWeeksInMonth } from "date-fns";
-import { fetchData, ProgramData } from '../api/ProgramApi';
+import BaseApi, { ProgramData} from '../api/ProgramApi';
 import { getIndexOfFirdsDayOfMonth, getWeekDay, getWeekNumber, getToday } from "../utils/DateUtils";
 import DayCell from '../classes/DayCell';
-
 import './TableContainer.scss';
 import Table from './Table';
 
@@ -20,7 +19,7 @@ export const getTitleAndCompletionStatus = (programData: ProgramData, date: numb
 
 export const createInitialDayCells = (programData: ProgramData, today: Date): DayCell[] => {
     const daysInMonth: number = getDaysInMonth(today);
-    const daysInCalendarGrid = getWeeksInMonth(today) * 7;
+    const daysInCalendarGrid = getWeeksInMonth(today, { weekStartsOn: 1 }) * 7;
     const indexOfFirstDay: number = getIndexOfFirdsDayOfMonth(today);
     
     const array: DayCell[] = [];
@@ -29,7 +28,7 @@ export const createInitialDayCells = (programData: ProgramData, today: Date): Da
     for (let step = 0; step < daysInCalendarGrid; step++) {
         const isFirstEmptyDays = step < indexOfFirstDay;
         const hasDateNumber = !isFirstEmptyDays && dayCounter <= daysInMonth;
-        
+
         if (hasDateNumber) {
             const { title, completed } = getTitleAndCompletionStatus(programData, dayCounter, today);               
             array.push(new DayCell(dayCounter, title, completed));
@@ -50,7 +49,7 @@ const TableContainer = (): JSX.Element => {
     useEffect(() => {
         const fetchProgramData = async () => {
             try {
-                const response: ProgramData = await fetchData() as ProgramData;
+                const response: ProgramData = await new BaseApi().fetchData() as ProgramData;
                 setDayCellData(createInitialDayCells(response, today));
               setError(null);
             } catch (error) {
@@ -59,7 +58,7 @@ const TableContainer = (): JSX.Element => {
         };
 
         fetchProgramData();
-    }, [today]);
+    }, []);
 
     return (
         <div>
@@ -77,7 +76,7 @@ const TableContainer = (): JSX.Element => {
                         </tr>
                     </thead>                   
                     {dayCellData ? (
-                        <Table dayCellArray={dayCellData} />
+                        <Table dayCellArray={dayCellData} today={today} />
                     ) : (
                         <div className='loading-message'>Loading...</div>
                     )}

@@ -1,5 +1,3 @@
-import { env } from '../env'
-
 export interface ProgramWeekItem {
     weekday: string;
     title: string;
@@ -12,12 +10,17 @@ export interface ProgramData {
     week3: ProgramWeekItem[];
 }
 
-export const fetchData = async (): Promise<ProgramData | undefined> => {
-    const programPath = env.REACT_APP_PROGRAM_PATH;
-    try {
-        const program = import(`${programPath}`)
-        return program;
-    } catch (error) {
-      throw new Error(`Error while fetching data, ${error}`)
+export default class BaseApi {
+    public async fetchData(): Promise<ProgramData | undefined> {
+        try {
+            const response = await fetch('./program.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+          throw new Error(`Error while fetching data, ${error}`)
+        }
     }
-};
+}
