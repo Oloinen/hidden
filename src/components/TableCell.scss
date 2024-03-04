@@ -2,7 +2,6 @@
 
 .cell-regular {
     background: $white;
-    color: $black;
     border: $green solid 2px;
     width: 14.3%;
     position: relative;
@@ -10,7 +9,6 @@
 
 .cell-titled {
     background: $white;
-    color: $green;
     border: $green solid 2px;
     width: 14.3%;
     position: relative;
@@ -18,13 +16,12 @@
 
 .cell-highlighted {
     background: $green;
-    color: white;
     border: $green solid 2px;
     width: 14.3%;
     position: relative;
 }
 
-.date {
+.date-regular {
     font-family: $h2-font;
     font-size: $h2-font-size;
     text-align: center;
@@ -32,13 +29,36 @@
     margin: 0;
     margin-top: 1.3rem;
     margin-bottom: 1.3rem;
+    color: $black;
+}
+
+.date-highlighted {
+    font-family: $h2-font;
+    font-size: $h2-font-size;
+    text-align: center;
+    vertical-align: text-top;
+    margin: 0;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+    color: $white;
+}
+
+.date-titled {
+    font-family: $h2-font;
+    font-size: $h2-font-size;
+    text-align: center;
+    vertical-align: text-top;
+    margin: 0;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+    color: $green;
 }
 
 .title {
     font-family: $h3-font;
     font-size: $h3-font-size;
     text-align: center;
-    color: $black !important;
+    color: $black;
     margin-top: 0;
     margin-bottom: 0.1rem;
     margin-left: 0.8rem;

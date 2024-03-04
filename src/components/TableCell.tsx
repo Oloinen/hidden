@@ -19,9 +19,15 @@ const TableCell = (props: TableCellProps): JSX.Element => {
         'cell-titled': !isDateToday && hasTitle
     });
 
+    const dateClassName = classNames({
+        'date-highlighted': isDateToday,
+        'date-regular': !isDateToday && !hasTitle,
+        'date-titled': !isDateToday && hasTitle
+    });
+
     return (
-    <td className={cellClassName} key={date} data-cy={'day-cell'}>
-        <h2 data-cy={'day-cell-date'} className='date'>{date}</h2>
+    <td className={cellClassName} data-cy={'day-cell'}>
+        <h2 data-cy={'day-cell-date'} className={dateClassName}>{date}</h2>
         <h3 data-cy={'day-cell-title'} className='title'>{title.toUpperCase()}</h3>
     </td>
 )};

@@ -3,16 +3,16 @@ import {
     getWeekNumber,
     getWeekDay,
     isWeekendDay,
+    getRunningDate
 } from '../utils/DateUtils';
 
-//Tarkista, miten toimii
-/*describe('getRunningDate', () => {
+describe('getRunningDate', () => {
     test('returns date for the number representing the date digits of the month and year of today', () => {
         const today = new Date('2022-03-15');
-        const date = getRunningDate(today, 7);
-        expect(date).toBe(2022-03-06T22:00:00.000Z')
+        const date = getRunningDate(today, 7).toDateString();
+        expect(date).toBe("Mon Mar 07 2022")
     });
-});*/
+});
   
 describe('getIndexOfFirdsDayOfMonth', () => {
     test('returns the index for the first day of the month relative to the weekday array', () => {

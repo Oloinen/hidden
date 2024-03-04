@@ -18,26 +18,36 @@ const filterDataForCalendar = (dayCellArray: DayCell[], today: Date): DayCell[][
         .filter(day => day.date as number < todaysDate && !day.completed)
         .map(day => day.title);  
 
-    const newArray = dayCellArray.map((day) => {
+    const finalDayCells = dayCellArray.map((day) => {
         const { date, title } = day;
+        const isPastDate = date as number < todaysDate;
 
-        if (date as number < todaysDate) {
-            return programsToBeMoved.includes(title) 
-            ? new DayCell(date, '')
-            : new DayCell(date, title);
-        } else if (programsToBeMoved.length) {
-            if (isWeekendDay(today, date as number)) {
-                return new DayCell(day.date, day.title)
-            }
-            if (title.length > 0) {
-                programsToBeMoved.push(title)
-            }
+        if (isPastDate && programsToBeMoved.includes(title)) {
+            return new DayCell(date, '');
+        }
+
+        if (isPastDate) {
+            return new DayCell(date, title);
+        }
+
+        if (isWeekendDay(today, date as number)) {
+            return new DayCell(date, '');
+        }
+        
+        if (programsToBeMoved.length && title.length > 0) {
+            programsToBeMoved.push(title);
             const newTitle = programsToBeMoved.shift();
             return new DayCell(date, newTitle as string);
         }
-        return new DayCell(date, title)               
+
+        if (programsToBeMoved.length) {
+            const newTitle = programsToBeMoved.shift();
+            return new DayCell(date, newTitle as string);
+        }
+        return new DayCell(date, title);          
     });
-    return _.chunk(newArray,7);
+
+    return _.chunk(finalDayCells,7);
 }
 
 const Table = ({ dayCellArray, today }: TableProps) => {
@@ -63,7 +73,9 @@ const Table = ({ dayCellArray, today }: TableProps) => {
                 <TableHeader />
             </thead>
             <tbody>
-                {dayCellArray && filterDataForCalendar(dayCellArray, today).map((weekDays: DayCell[], index: number) => renderRow(weekDays, index))}
+                {dayCellArray && filterDataForCalendar(dayCellArray, today)
+                    .map((weekDays: DayCell[], index: number) => renderRow(weekDays, index))
+                }
             </tbody>
         </>
     )

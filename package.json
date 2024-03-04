@@ -2,7 +2,7 @@
   "name": "meru-app",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@table-library/react-table-library": "^4.1.7",
@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --detectOpenHandles",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint **/*.tsx",
     "cypress": "cypress open",
@@ -48,7 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/lodash": "^4.14.202",
     "cypress": "^13.6.6",
     "eslint": "^8.57.0",

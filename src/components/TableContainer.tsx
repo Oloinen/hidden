@@ -22,22 +22,23 @@ export const createInitialDayCells = (programData: ProgramData, today: Date): Da
     const daysInCalendarGrid = getWeeksInMonth(today, { weekStartsOn: 1 }) * 7;
     const indexOfFirstDay: number = getIndexOfFirdsDayOfMonth(today);
     
-    const array: DayCell[] = [];
+    const dayCellArray: DayCell[] = [];
 
     let dayCounter = 1;
     for (let step = 0; step < daysInCalendarGrid; step++) {
         const isFirstEmptyDays = step < indexOfFirstDay;
         const hasDateNumber = !isFirstEmptyDays && dayCounter <= daysInMonth;
 
-        if (hasDateNumber) {
-            const { title, completed } = getTitleAndCompletionStatus(programData, dayCounter, today);               
-            array.push(new DayCell(dayCounter, title, completed));
-            dayCounter++;
-        } else {
-            array.push(new DayCell('','', true));
-        } 
+        const { title, completed } = hasDateNumber
+            ? getTitleAndCompletionStatus(programData, dayCounter, today)
+            : { title: '', completed: true };
+
+        dayCellArray.push(new DayCell(hasDateNumber ? dayCounter : '', title, completed));
+
+        hasDateNumber && dayCounter++;
     }
-    return array;
+
+    return dayCellArray;
 };
 
 const TableContainer = (): JSX.Element => {
@@ -51,7 +52,7 @@ const TableContainer = (): JSX.Element => {
             try {
                 const response: ProgramData = await new BaseApi().fetchData() as ProgramData;
                 setDayCellData(createInitialDayCells(response, today));
-              setError(null);
+                setError(null);
             } catch (error) {
               setError('Error while loading the page. Please try again.');
             }
@@ -74,11 +75,13 @@ const TableContainer = (): JSX.Element => {
                                 <h1 className='heading-text'>Weekly Program</h1>
                             </td>
                         </tr>
-                    </thead>                   
-                    {dayCellData ? (
+                    </thead>              
+                    {dayCellData && dayCellData?.length> 0 ? (
                         <Table dayCellArray={dayCellData} today={today} />
                     ) : (
-                        <div className='loading-message'>Loading...</div>
+                        <tr>
+                            <td colSpan={7} className='loading-message'>Loading...</td>
+                        </tr>
                     )}
             </table>
             )}
